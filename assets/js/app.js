@@ -70,7 +70,7 @@ $(document).ready(function() {
   function initialise(repo) {
     var $repo = $('<tr>').attr('class', 'repo-' + repo)
       .append('<td class="commits">')
-      .append($('<td class="name">').append($('<a>').attr('href', build_http_compare_url(repo.path, from_tag, to_tag)).text(repo.name)))
+      .append($('<td class="environment">').append($('<a>').attr('href', build_http_compare_url(repo.path, from_tag, to_tag)).text(from_tag)))
       .append('<td class="time">');
 
     container.append($repo);
