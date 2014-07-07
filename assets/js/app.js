@@ -84,7 +84,6 @@ $(document).ready(function() {
 
       var $repo = $('<tr>').attr('class', 'repo-' + repo)
         .append('<td class="commits">')
-        .append('<td class="merges">')
         .append($('<td class="name">').append($('<a>').attr('href', build_http_compare_url(repo.path, from_tag, to_tag)).text(repo.name)))
         .append('<td class="time">');
 
@@ -105,7 +104,6 @@ $(document).ready(function() {
           var mergeCommits = repo_state.commits.filter(function(commit) {
             return commit.parents.length > 1}
           );
-          repo.$el.find('.merges').text(mergeCommits.length || '✔');
 
           if (repo_state.commits.length) {
             repo.$el.find('.time').text(prettyDate(repo_state.commits[0].commit.author.date));
@@ -117,7 +115,7 @@ $(document).ready(function() {
           repo.$el.addClass('unknown');
 
           if (e.status == 404) {
-            repo.$el.find('.commits', '.merges').text('?');
+            repo.$el.find('.commits').text('?');
           }
         },
         headers: {
