@@ -108,7 +108,7 @@ $(document).ready(function() {
           repo.$el.find('.merges').text(mergeCommits.length || '✔');
 
           if (repo_state.commits.length) {
-            repo.$el.find('.time').text(prettyDate(mergeCommits[0].commit.author.date));
+            repo.$el.find('.time').text(prettyDate(repo_state.commits[0].commit.author.date));
           }
         },
         error: function(e) {
