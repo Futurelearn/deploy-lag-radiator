@@ -51,13 +51,7 @@ $(document).ready(function() {
       dataType: 'json',
       success: updateCommitStatus,
       error: function(e) {
-        // Most likely invalid comparison, one (or both) of the tags don't exist
-        // Or the repo name is bad
-        repo.$el.addClass('unknown');
-
-        if (e.status == 404) {
-          repo.$el.find('.commits').text('?');
-        }
+        console.log(e)
       },
       headers: {
         'Authorization': 'token ' + api_token
