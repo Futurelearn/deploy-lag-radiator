@@ -12,20 +12,15 @@ $(document).ready(function() {
     return 'https://api.github.com/repos/' + repo + '/compare/' + from_tag + '...' + to_tag
   }
 
-  var build_http_compare_url = function(repo, from_tag, to_tag) {
-    return 'https://github.com/' + repo + '/compare/' + from_tag + '...' + to_tag
-  }
-
   var repo = {
     path: repo_owner + '/' + repo_name,
     name: repo_name
   }
 
-
   var initialise = function(repo) {
     var $repo = $('<tr>').attr('class', 'repo-' + repo)
       .append('<td class="commits">')
-      .append($('<td class="environment">').append($('<a>').attr('href', build_http_compare_url(repo.path, from_tag, to_tag)).text(from_tag)))
+      .append($('<td class="environment">').text(from_tag))
       .append('<td class="time">');
 
     container.append($repo);
