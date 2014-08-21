@@ -15,6 +15,7 @@ $(document).ready(function() {
   }
 
   var compareAPIPath = '/repos/' + repo.path + '/compare/' + from_tag + '...' + to_tag
+  var statusAPIPath = '/repos/' + repo.path + '/commits/master/status'
 
   var initialise = function(repo) {
     var $repo = $('<tr>').attr('class', 'repo-' + repo)
@@ -38,6 +39,10 @@ $(document).ready(function() {
     }
   }
 
+  var updatebuildStatus = function(repo_status) {
+    console.log(repo_status.state)
+  }
+
   var githubAPICall = function(path, callback) {
     $.ajax({
       url: "https://api.github.com" + path,
@@ -54,6 +59,8 @@ $(document).ready(function() {
 
   var update = function(repo, refresh_rate) {
     githubAPICall(compareAPIPath, updateCommitStatus)
+    console.log(statusAPIPath)
+    githubAPICall(statusAPIPath, updatebuildStatus)
 
     if (refresh_rate) {
       setTimeout(function() {
