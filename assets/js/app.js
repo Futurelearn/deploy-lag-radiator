@@ -8,14 +8,13 @@ $(document).ready(function() {
 
   var container = $('#container');
 
-  var compareAPIPath = function(from_tag, to_tag) {
-    return '/repos/' + repo.path + '/compare/' + from_tag + '...' + to_tag
-  }
 
   var repo = {
     path: repo_owner + '/' + repo_name,
     name: repo_name
   }
+
+  var compareAPIPath = '/repos/' + repo.path + '/compare/' + from_tag + '...' + to_tag
 
   var initialise = function(repo) {
     var $repo = $('<tr>').attr('class', 'repo-' + repo)
@@ -54,8 +53,7 @@ $(document).ready(function() {
   }
 
   var update = function(repo, refresh_rate) {
-    path = compareAPIPath(from_tag, to_tag);
-    githubAPICall(path, updateCommitStatus)
+    githubAPICall(compareAPIPath, updateCommitStatus)
 
     if (refresh_rate) {
       setTimeout(function() {
