@@ -8,8 +8,8 @@ $(document).ready(function() {
 
   var container = $('#container');
 
-  var build_api_url = function(repo, from_tag, to_tag) {
-    return 'https://api.github.com/repos/' + repo + '/compare/' + from_tag + '...' + to_tag
+  var build_api_path = function(repo, from_tag, to_tag) {
+    return '/repos/' + repo + '/compare/' + from_tag + '...' + to_tag
   }
 
   var repo = {
@@ -39,9 +39,9 @@ $(document).ready(function() {
     }
   }
 
-  var githubAPICall = function(url, callback) {
+  var githubAPICall = function(path, callback) {
     $.ajax({
-      url: url,
+      url: "https://api.github.com" + path,
       dataType: 'json',
       success: callback,
       error: function(e) {
@@ -54,8 +54,8 @@ $(document).ready(function() {
   }
 
   var update = function(repo, refresh_rate) {
-    api_url = build_api_url(repo.path, from_tag, to_tag);
-    githubAPICall(api_url, updateCommitStatus)
+    api_path = build_api_path(repo.path, from_tag, to_tag);
+    githubAPICall(api_path, updateCommitStatus)
 
     if (refresh_rate) {
       setTimeout(function() {
