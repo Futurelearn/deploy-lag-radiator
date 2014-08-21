@@ -4,83 +4,106 @@
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <title>Deploy Lag Radiator</title>
   <style type="text/css">
+  html {
+    height: 100%;
+  }
   body {
     margin: 0;
     padding: 0;
-
-    font: medium/1.4 sans-serif;
-    color: #222;
-    background: #fff
+    font-size: 2vmin;
+    font: medium/1.4 "Helvetica Neue", Arial, sans-serif;
+    color: #3A343A;
+    background: #fff;
+    height: 100%;
   }
 
   h1 {
+    position: absolute;
     margin: 0;
-    font-size: 3vw;
+    font-size: 4vmin;
     background: #DE00A5;
     color: #fff;
-    padding: 1vw 4vw;
+    padding: 1vw 4vmin;
     font-weight: normal;
   }
 
-  table {
-    width: 100%;
+  .updated-at {
+    padding-left: 20px;
+    font-size: 2.5vmin;
   }
 
-  table th {
-    text-align: left;
-    padding: 2vw 4vw 0;
-    color: #ccc;
-    font-weight: normal;
-    font-size: 2vw;
+  .boxes {
+    padding-top: 3vmin;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
   }
 
-  table td {
-    font-size: 4vw;
-    padding: 2vw 4vw;
-    border-bottom: 1px solid #ccc;
-  }
-
-  table td.environment a {
-    text-decoration: none;
-    color: #222;
-  }
-
-  table td.time {
-    font-size: 3vw;
-    color: #888;
-  }
-
-  table td.commits {
+  .box {
+    background-color: #DDDEDF;
+    border-radius: 20px;
+    padding:3vmin;
+    margin:3vmin;
     text-align: center;
   }
 
-  table tr.good td.commits {
-    color: green;
+  .box h2 {
+    font-size: 4vmin;
+    margin: 0;
+    margin-bottom: 2vmin;
   }
 
-  table tr.stale td.commits {
-    color: red;
+  .stat {
+    font-size: 8vmin;
+    margin-bottom: 2vmin;
   }
 
-  table tr.unknown td.commits {
-    color: orange;
+  .detail {
+    font-size: 3vmin;
   }
 
+  .build.success, .good {
+    background-color: #62DE00;
+  }
+  .build.failure .bad {
+    background-color: #FECB51
+  }
+  .build.pending, .uknown, .meh {
+    background-color: #DDDEDF;
+  }
   </style>
 </head>
 <body>
 
-<h1>Undeployed commits</h1>
+<h1>FutureLearn development status <span class="updated-at">updated at ?</span></h1>
+<div class="boxes">
+  <div class="box build">
+    <h2>Master build</h1>
+    <div class="stat">?</div>
+  </div>
 
-<table id="container">
-  <thead>
-    <tr>
-      <th class="commits">commits</th>
-      <th class="environment">environment</th>
-      <th class="last-deploy">oldest commit</th>
-    </tr>
-  </thead>
-</table>
+  <div class="box staging-deploys">
+    <h2>Staging deploys</h1>
+    <div class="stat number">?</div>
+    <div class="detail"></div>
+  </div>
+
+  <div class="box production-deploys">
+    <h2>Production deploys</h1>
+    <div class="stat number">?</div>
+    <div class="detail"></div>
+  </div>
+
+  <div class="box pull-requests">
+    <h2>Pull requests</h1>
+    <div class="stat">?</div>
+    <div class="detail"></div>
+  </div>
+</boxes>
 
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/helpers.js"></script>

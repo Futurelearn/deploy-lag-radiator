@@ -1,8 +1,6 @@
 $(document).ready(function() {
   var repo_name = getQueryVariable('repo');
   var refresh_rate = (getQueryVariable('refresh') || 60) * 1000;
-  var from_tag = getQueryVariable('from');
-  var to_tag = getQueryVariable('to') || 'master';
   var api_token = getQueryVariable('token');
   var repo_owner = getQueryVariable('owner') || 'futurelearn';
 
@@ -14,33 +12,17 @@ $(document).ready(function() {
     name: repo_name
   }
 
-  var compareAPIPath = '/repos/' + repo.path + '/compare/' + from_tag + '...' + to_tag
+  var compareAPIPath = function(from, to) {
+    return '/repos/' + repo.path + '/compare/' + from + '...' + to
+  }
+
   var statusAPIPath = '/repos/' + repo.path + '/commits/master/status'
 
-  var initialise = function(repo) {
-    var $repo = $('<tr>').attr('class', 'repo-' + repo)
-      .append('<td class="commits">')
-      .append($('<td class="environment">').text(from_tag))
-      .append('<td class="time">');
-
-    container.append($repo);
-    repo.$el = $repo;
-  }
-
-  var updateCommitStatus = function(repo_state){
-    repo.$el.find('.commits').text(repo_state.ahead_by || '✔');
-    repo.$el.addClass(repo_state.ahead_by ? 'stale' : 'good');
-    var mergeCommits = repo_state.commits.filter(function(commit) {
-      return commit.parents.length > 1}
-    );
-
-    if (repo_state.commits.length) {
-      repo.$el.find('.time').text(prettyDate(repo_state.commits[0].commit.author.date));
-    }
-  }
+  var pullRequestsAPIPath = '/repos/' + repo.path + '/pulls'
 
   var updatebuildStatus = function(repo_status) {
-    console.log(repo_status.state)
+    $('.build .stat').text(repo_status.state)
+    $('.build').attr('class', 'box build '+ repo_status.state)
   }
 
   var githubAPICall = function(path, callback) {
@@ -57,10 +39,57 @@ $(document).ready(function() {
     });
   }
 
+  var updateDeployStatus = function(repo_state, $element, from_name) {
+    if (repo_state.ahead_by == 0) {
+      $element.find('.stat').text('up to date')
+      $element.find('.detail').text('')
+    } else if (repo_state.ahead_by == 1) {
+      $element.find('.stat').text('1')
+      $element.find('.detail').text('commit behind ' + from_name)
+    } else {
+      $element.find('.stat').text(repo_state.ahead_by)
+      $element.find('.detail').text('commits behind ' + from_name)
+    }
+    $element.removeClass('good bad meh');
+    if (repo_state.ahead_by == 0) {
+      $element.addClass('good')
+    } else if (repo_state.ahead_by > 10) {
+      $element.addClass('bad')
+    } else {
+      $element.addClass('meh')
+    }
+  }
+
+
+  var updateStagingStatus = function(repo_state) {
+    updateDeployStatus(repo_state, $('.staging-deploys'), 'master-build-passed')
+  }
+
+  var updateProductionStatus = function(repo_state) {
+    updateDeployStatus(repo_state, $('.production-deploys'), 'current-staging')
+  }
+
+  var updatePullReqestsStatus = function(pull_requests) {
+    $('.pull-requests .stat').text(pull_requests.length)
+  }
+
+  var updateTime = function() {
+    var time = new Date();
+    var lastUpdated = "updated at "
+      + time.getFullYear() + '-'
+      + (time.getMonth()+1) + '-'
+      + time.getDate() + ' '
+      + time.getHours() + ":"
+      + time.getMinutes()
+
+    $('.updated-at').text(lastUpdated)
+  }
   var update = function(repo, refresh_rate) {
-    githubAPICall(compareAPIPath, updateCommitStatus)
-    console.log(statusAPIPath)
+    githubAPICall(compareAPIPath('current-production', 'current-staging'), updateStagingStatus)
+    githubAPICall(compareAPIPath('current-staging', 'master-build-passed'), updateProductionStatus)
     githubAPICall(statusAPIPath, updatebuildStatus)
+    githubAPICall(pullRequestsAPIPath, updatePullReqestsStatus)
+    updateTime()
 
     if (refresh_rate) {
       setTimeout(function() {
@@ -69,7 +98,5 @@ $(document).ready(function() {
     }
   }
 
-  initialise(repo);
   update(repo, refresh_rate);
-
 });
