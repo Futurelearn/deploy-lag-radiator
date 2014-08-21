@@ -8,7 +8,7 @@ $(document).ready(function() {
 
   var container = $('#container');
 
-  var build_api_path = function(repo, from_tag, to_tag) {
+  var compareAPIPath = function(repo, from_tag, to_tag) {
     return '/repos/' + repo + '/compare/' + from_tag + '...' + to_tag
   }
 
@@ -54,8 +54,8 @@ $(document).ready(function() {
   }
 
   var update = function(repo, refresh_rate) {
-    api_path = build_api_path(repo.path, from_tag, to_tag);
-    githubAPICall(api_path, updateCommitStatus)
+    path = compareAPIPath(repo.path, from_tag, to_tag);
+    githubAPICall(path, updateCommitStatus)
 
     if (refresh_rate) {
       setTimeout(function() {
