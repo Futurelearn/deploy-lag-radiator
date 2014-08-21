@@ -21,10 +21,8 @@ $(document).ready(function() {
     name: repo_name
   }
 
-  initialise(repo);
-  update(repo, refresh_rate);
 
-  function initialise(repo) {
+  var initialise = function(repo) {
     var $repo = $('<tr>').attr('class', 'repo-' + repo)
       .append('<td class="commits">')
       .append($('<td class="environment">').append($('<a>').attr('href', build_http_compare_url(repo.path, from_tag, to_tag)).text(from_tag)))
@@ -34,7 +32,7 @@ $(document).ready(function() {
     repo.$el = $repo;
   }
 
-  function update(repo, refresh_rate) {
+  var update = function(repo, refresh_rate) {
     api_url = build_api_url(repo.path, from_tag, to_tag);
     $.ajax({
       url: api_url,
@@ -70,4 +68,8 @@ $(document).ready(function() {
       }, refresh_rate);
     }
   }
+
+  initialise(repo);
+  update(repo, refresh_rate);
+
 });
