@@ -44,12 +44,11 @@ $(document).ready(function() {
     }
   }
 
-  var update = function(repo, refresh_rate) {
-    api_url = build_api_url(repo.path, from_tag, to_tag);
+  var githubAPICall = function(url, callback) {
     $.ajax({
-      url: api_url,
+      url: url,
       dataType: 'json',
-      success: updateCommitStatus,
+      success: callback,
       error: function(e) {
         console.log(e)
       },
@@ -57,6 +56,11 @@ $(document).ready(function() {
         'Authorization': 'token ' + api_token
       }
     });
+  }
+
+  var update = function(repo, refresh_rate) {
+    api_url = build_api_url(repo.path, from_tag, to_tag);
+    githubAPICall(api_url, updateCommitStatus)
 
     if (refresh_rate) {
       setTimeout(function() {
