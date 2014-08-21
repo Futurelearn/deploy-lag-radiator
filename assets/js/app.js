@@ -4,7 +4,7 @@ $(document).ready(function() {
   var from_tag = getQueryVariable('from');
   var to_tag = getQueryVariable('to') || 'master';
   var api_token = getQueryVariable('token');
-  var repo_owner = getQueryVariable('owner') || 'alphagov';
+  var repo_owner = getQueryVariable('owner') || 'futurelearn';
 
   var container = $('#container');
 
