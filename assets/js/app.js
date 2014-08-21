@@ -32,22 +32,24 @@ $(document).ready(function() {
     repo.$el = $repo;
   }
 
+  var updateCommitStatus = function(repo_state){
+    repo.$el.find('.commits').text(repo_state.ahead_by || '✔');
+    repo.$el.addClass(repo_state.ahead_by ? 'stale' : 'good');
+    var mergeCommits = repo_state.commits.filter(function(commit) {
+      return commit.parents.length > 1}
+    );
+
+    if (repo_state.commits.length) {
+      repo.$el.find('.time').text(prettyDate(repo_state.commits[0].commit.author.date));
+    }
+  }
+
   var update = function(repo, refresh_rate) {
     api_url = build_api_url(repo.path, from_tag, to_tag);
     $.ajax({
       url: api_url,
       dataType: 'json',
-      success: function(repo_state) {
-        repo.$el.find('.commits').text(repo_state.ahead_by || '✔');
-        repo.$el.addClass(repo_state.ahead_by ? 'stale' : 'good');
-        var mergeCommits = repo_state.commits.filter(function(commit) {
-          return commit.parents.length > 1}
-        );
-
-        if (repo_state.commits.length) {
-          repo.$el.find('.time').text(prettyDate(repo_state.commits[0].commit.author.date));
-        }
-      },
+      success: updateCommitStatus,
       error: function(e) {
         // Most likely invalid comparison, one (or both) of the tags don't exist
         // Or the repo name is bad
