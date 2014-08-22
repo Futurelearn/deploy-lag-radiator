@@ -76,12 +76,19 @@ $(document).ready(function() {
 
   var updateTime = function() {
     var time = new Date();
-    var lastUpdated = "updated at "
-      + time.getFullYear() + '-'
-      + (time.getMonth()+1) + '-'
-      + time.getDate() + ' '
-      + time.getHours() + ":"
-      + time.getMinutes()
+
+    date = time.getDate()
+    month = time.getMonth() + 1
+    hours = time.getHours()
+    minutes = time.getMinutes()
+
+    if (date < 10) { date = '0' + date }
+    if (month < 10) { month = '0' + month }
+    if (hours < 10) { hours = '0' + hours }
+    if (minutes < 10) { minutes = '0' + minutes }
+
+    var lastUpdated = 'updated at ' + time.getFullYear() + '-' + month + '-' + date
+      + ' ' + hours + ':' + minutes
 
     $('.updated-at').text(lastUpdated)
   }
