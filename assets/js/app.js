@@ -1,9 +1,10 @@
 $(document).ready(function() {
   var repo_name = getQueryVariable('repo');
   var refresh_rate = (getQueryVariable('refresh') || 60) * 1000;
+  var reload_page_rate = getQueryVariable('reload_page_rate') || 10;
   var api_token = getQueryVariable('token');
   var repo_owner = getQueryVariable('owner') || 'futurelearn';
-
+  var refreshes = 0;
   var container = $('#container');
 
 
@@ -93,7 +94,13 @@ $(document).ready(function() {
 
     if (refresh_rate) {
       setTimeout(function() {
-        update(repo, refresh_rate);
+        if (refreshes == reload_page_rate ) {
+          refreshes = 0;
+          window.location.reload(true);
+        } else {
+          refreshes = refreshes + 1;
+          update(repo, refresh_rate);
+        }
       }, refresh_rate);
     }
   }
