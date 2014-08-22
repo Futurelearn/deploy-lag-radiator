@@ -9,6 +9,8 @@ body {
   color: #3A343A;
   background: #fff;
   height: 100%;
+
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FECB51), color-stop(100%, #DE00A5));
 }
 
 h1 {
