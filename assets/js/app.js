@@ -86,8 +86,8 @@ $(document).ready(function() {
     $('.updated-at').text(lastUpdated)
   }
   var update = function(repo, refresh_rate) {
-    githubAPICall(compareAPIPath('current-production', 'current-staging'), updateStagingStatus)
-    githubAPICall(compareAPIPath('current-staging', 'master-build-passed'), updateProductionStatus)
+    githubAPICall(compareAPIPath('current-staging', 'master-build-passed'), updateStagingStatus)
+    githubAPICall(compareAPIPath('current-production', 'current-staging'), updateProductionStatus)
     githubAPICall(statusAPIPath, updatebuildStatus)
     githubAPICall(pullRequestsAPIPath, updatePullReqestsStatus)
     updateTime()
