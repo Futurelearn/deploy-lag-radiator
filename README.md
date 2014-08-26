@@ -31,3 +31,12 @@ Pass configuration as query params, supported params are;
 This is hosted by github pages. You can see it by going to:
 `https://futurelearn.github.io/deploy-lag-radiator/?repo=<REPO_NAME>&token=<GITHUB_APIT_TOKEN>`
 
+### Running on a ChromeOS device
+
+We have this setup using a [HP Chromebox](http://store.hp.com/UKStore/Merch/Product.aspx?id=G9D05EA&opt=ABU&sel=PCDT) which is a low-cost device that can display web pages out-of-the-box. ChromeOS also has a 'kiosk' mode which makes it easy to launch the page and run it full screen.
+
+#### Setup
+To setup this on ChromeOS, follow [Google's instructions for enabling Kiosk mode](https://chrome.google.com/webstore/detail/kiosk/afhcomalholahplbjhnmahkoekoijban) and install the ['Kiosk' kiosk extension by Zebradog](https://chrome.google.com/webstore/detail/kiosk/afhcomalholahplbjhnmahkoekoijban) ([source](https://github.com/zebradog/kiosk)). You don't have to 'Set to auto-launch' if you want easy access to other accounts on the device. The first time you run the screen you need to provide the github pages URL with the required params.
+
+#### Running
+If you have set 'auto-launch' it will appear when the device is turned on. If not, click to the 'Apps' button on the lower left of the login screen and choose 'Kiosk'.
