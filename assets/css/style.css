@@ -5,12 +5,16 @@ body {
   margin: 0;
   padding: 0;
   font-size: 2vmin;
-  font: medium/1.4 "Helvetica Neue", Arial, sans-serif;
+  font: medium/1.4 "Europa", Arial, sans-serif;
   color: #3A343A;
   background: #fff;
   height: 100%;
 
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FECB51), color-stop(100%, #DE00A5));
+}
+
+h1, h2, h3, h4, h5 {
+  text-transform: uppercase;
 }
 
 .updated-at {
