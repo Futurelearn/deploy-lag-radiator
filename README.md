@@ -12,8 +12,8 @@ It assumes that:
 
 * `master` is updated with the build status using the github status API (TravisCI does this)
 * `master-build-passed` branch is updated to the most recently passed master build
-* `current-staging` branch is updated to the last commit deployed to staging 
-* `current-production` branch is updated to the last commit deployed to production 
+* `current-staging` branch is updated to the last commit deployed to staging
+* `current-production` branch is updated to the last commit deployed to production
 
 
 ## Config
@@ -21,7 +21,7 @@ It assumes that:
 Pass configuration as query params, supported params are;
 
 * `token` - A Github API token
-* `repo` - The of repositor name
+* `repo` - The name of the repository
 * `refresh` - How often to update the data in the page, in seconds [_optional_, defaults to `60`]
 * `reload_page_rate` - How many refreshes before the page is reloaded [_optional_, defaults to `10`]
 * `repo_owner` - The owner of the repository [_optional_, defaults to `futurelearn`]
