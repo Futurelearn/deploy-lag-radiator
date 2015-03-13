@@ -64,3 +64,13 @@ body {
 .build.pending, .unknown, .meh {
   background-color: #DDDEDF;
 }
+
+.latest-commit {
+  margin: 80px 0 0 0;
+  font-size: 20px;
+  opacity: 0.8;
+}
+
+.commit-info {
+  margin: 0;
+}

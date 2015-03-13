@@ -59,8 +59,9 @@ $(document).ready(function() {
     } else {
       $element.addClass('meh')
     }
-  }
 
+    updateLatestCommitInfo(repo_state, $element);
+  }
 
   var updateStagingStatus = function(repo_state) {
     updateDeployStatus(repo_state, $('.staging-deploys'), 'master-build-passed')
@@ -110,6 +111,19 @@ $(document).ready(function() {
         }
       }, refresh_rate);
     }
+  }
+
+  var shortenSha = function(full_sha) {
+    return full_sha.substr(0,7);
+  }
+
+  var updateLatestCommitInfo = function(repo_state, $element) {
+    var baseCommit = repo_state.base_commit;
+    var latestCommitAuthor = baseCommit.committer.login;
+    var latestCommitSha = shortenSha(baseCommit.sha);
+
+    $element.find('.commit-sha').text(latestCommitSha);
+    $element.find('.commit-author').text(latestCommitAuthor);
   }
 
   update(repo, refresh_rate);
