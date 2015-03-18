@@ -119,7 +119,12 @@ $(document).ready(function() {
 
   var updateLatestCommitInfo = function(repo_state, $element) {
     var baseCommit = repo_state.base_commit;
-    var latestCommitAuthor = baseCommit.committer.login;
+    var latestCommitAuthor = '';
+
+    if (baseCommit.committer != null) {
+      latestCommitAuthor = baseCommit.committer.login;
+    }
+
     var latestCommitSha = shortenSha(baseCommit.sha);
 
     $element.find('.commit-sha').text(latestCommitSha);
